@@ -10,15 +10,15 @@ def ValidateSingleIsRight( _validate_value, _real_value, _ErrorTolerance=0.05):
     else:
         return False
     
-def ValidateRightRate(_validate_set, _real_set):
+def ValidateRightRate(_validate_set, _real_set, _set_name):
     right_num=0
     for index in range(len(_real_set)):
         if ValidateSingleIsRight(_validate_value=_validate_set[index], _real_value=_real_set[index]):
             right_num+=1
-    print("rightNum:%d" %(right_num))
+    print("%s rightNum:%d" %(_set_name, right_num))
     #预测准确率=（预测正确样本数）/（总测试样本数）* 100%
     right_rate = right_num/len(_real_set)
-    print("rightRate:%f" %(right_rate))
+    print("%s rightRate:%f" %(_set_name,right_rate))
     return right_rate
 
 
@@ -61,10 +61,10 @@ dataframe.to_csv("ValidateSet.csv",index=False,sep=',')
 
 #人工指定一个 ErrorTolerance（一般是10%或者5%），当 |预测值-真实值| / 真实值 <= ErrorTolerance 时，我们认为预测正确，否则为预测错误。
 ErrorTolerance = 0.05
-validate_right_rate = ValidateRightRate(_validate_set=diabetes_y_pred, _real_set=Y_ValidateSet)
+validate_right_rate = ValidateRightRate(_validate_set=diabetes_y_pred, _real_set=Y_ValidateSet, _set_name='Validate')
 #用测试集继续测试
 diabetes_y_pred_test = regr.predict(X_TestSet)
-test_right_rate = ValidateRightRate(_validate_set=diabetes_y_pred_test, _real_set=Y_TestSet)
+test_right_rate = ValidateRightRate(_validate_set=diabetes_y_pred_test, _real_set=Y_TestSet, _set_name='Test')
 #输出验证集中数据，作为参考，字典中的key值即为csv中列名
 dataframe = pd.DataFrame({'TestSet':Y_TestSet,'diabetes_y_pred':diabetes_y_pred_test})
 #将DataFrame存储为csv,index表示是否显示行名，default=True
