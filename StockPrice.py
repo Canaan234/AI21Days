@@ -35,7 +35,7 @@ rows_count_validate = rows_count_training+rows_count//10*1
 #按7:1:2或2:1:1分训练、验证、测试集
 X_TrainingSet = X[:rows_count_training]
 X_ValidateSet = X[rows_count_training:rows_count_validate]
-X_TestSet = X[rows_count_validate:]
+X_TestSet = X[rows_count_validate:] 
 
 plt_x_validate_set = plt_x[rows_count_training:rows_count_validate]
 
